@@ -17,54 +17,54 @@ import java.util.List;
  * @since 2023. 11. 23
  * @author swlee
  */
-@Slf4j(topic = "MenuController")
+@Slf4j(topic = "ImageController")
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-@RequestMapping("/menu")
-public class MenuController {
+@RequestMapping("/menu/images")
+public class ImageController {
 
     private final MenuService menuService;
 
     /**
-     * 메뉴 가게 전체 리스트 조회
+     * 메뉴 조회
      * @since 2023. 11. 23
      *
-     * @return ResponseEntity<List<String>> 메뉴 가게 전체 리스트 반환
+     * @return ResponseEntity<List<String>> 메뉴 리스트 반환
      */
-    @GetMapping("/{storeId}")
-    public ResponseEntity<List<MenuResponseDto>> getMenuList(@PathVariable Long storeId) {
+    @GetMapping("")
+    public ResponseEntity<List<MenuResponseDto>> getMenuList() {
         log.info("getMenuList");
-        List<MenuResponseDto> menuList = menuService.getMenuList(storeId);
+        List<MenuResponseDto> menuList = menuService.getMenuList();
         log.info("menuList : {}", menuList);
         return ResponseEntity.ok().body(menuList);
     }
 
     /**
-     * 메뉴 상세 조회
+     * 메뉴 상세 정보 조회
      * @since 2023. 11. 23
      *
-     * @param itemId 메뉴 아이템 아이디
+     * @param menuId 메뉴 아이디
      * @return ResponseEntity<String> 메뉴 상세 정보 반환
      */
-    @GetMapping("/items/{itemId}")
-    public ResponseEntity<MenuResponseDto> getMenuById(@PathVariable Long itemId) {
+    @GetMapping("/{menuId}")
+    public ResponseEntity<MenuResponseDto> getMenuById(@PathVariable Long menuId) {
         log.info("getMenuById");
-        MenuResponseDto menu = menuService.getMenuById(itemId);
+        MenuResponseDto menu = menuService.getMenuById(menuId);
         log.info("menu : {}", menu);
         return ResponseEntity.ok().body(menu);
     }
 
     /**
-     * 메뉴 아이템 추가
+     * 메뉴 생성
      * @since 2023. 11. 23
      *
-     * @return ResponseEntity<Void> 메뉴 아이템 추가 성공 여부 반환
+     * @return ResponseEntity<Void> 메뉴 생성 성공 여부 반환
      */
-    @PostMapping("/items")
-    public ResponseEntity<Void> addMenuItem(@RequestBody List<MenuRequestDto> menuRequestDtoList) {
-        log.info("addMenuItem");
-        menuService.addMenuItem(menuRequestDtoList);
-        log.info("addMenuItem : success");
+    @PostMapping("")
+    public ResponseEntity<Void> createMenu() {
+        log.info("createMenu");
+        menuService.createMenu();
+        log.info("createMenu : success");
         return ResponseEntity.ok().build();
     }
 

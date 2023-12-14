@@ -6,29 +6,34 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "search_history")
+@Table(name = "catalog")
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class SearchHistory {
+public class Category {
 
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long searchHistoryId;
+    private Long catalogId;
 
     @Column(nullable = false)
-    private String searchKeyword;
-
-    @Column(nullable = false)
-    private Long memberId;
+    private String catalogName;
 
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime regDate;
 
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime modDate;
+
+    public Category(long catalogId) {
+        this.catalogId = catalogId;
+    }
 }

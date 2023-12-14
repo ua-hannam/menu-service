@@ -7,6 +7,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "menu")
@@ -23,9 +25,6 @@ public class Menu {
     @Column(nullable = false)
     private String menuName;
 
-    @Column(nullable = false)
-    private int menuPrice;
-
     @Column
     private String menuDesc;
 
@@ -34,8 +33,12 @@ public class Menu {
     private MenuGroup menuGroup;
 
     @ManyToOne
-    @JoinColumn(name = "catalog_id", nullable = false)
-    private Catalog catalog;
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+
+    @ManyToMany(mappedBy = "menus")
+    private Set<MenuStore> menuStores = new HashSet<>();
 
     @CreatedDate
     @Column(nullable = false)
@@ -48,7 +51,6 @@ public class Menu {
     public MenuResponseDto toDto() {
         return MenuResponseDto.builder()
                 .menuName(menuName)
-                .menuPrice(menuPrice)
                 .menuDesc(menuDesc)
                 .build();
     }

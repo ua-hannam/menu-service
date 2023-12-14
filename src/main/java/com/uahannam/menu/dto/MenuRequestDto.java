@@ -1,6 +1,6 @@
 package com.uahannam.menu.dto;
 
-import com.uahannam.menu.domain.Catalog;
+import com.uahannam.menu.domain.Category;
 import com.uahannam.menu.domain.Menu;
 import com.uahannam.menu.domain.MenuGroup;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class MenuRequestDto {
                 .menuPrice(menuPrice)
                 .menuDesc(menuDesc)
                 .menuGroup(new MenuGroup(menuGroupId))
-                .catalog(new Catalog(catalogId))
+                .catalog(new Category(catalogId))
                 .build();
     }
 }

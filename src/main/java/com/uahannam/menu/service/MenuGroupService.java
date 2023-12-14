@@ -16,15 +16,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Transactional(readOnly = true)
-public class MenuService {
+public class MenuGroupService {
 
     private final MenuRepository menuRepository;
 
-    public List<MenuResponseDto> getMenuList(Long storeId) {
-        return menuRepository.findByStoreId(storeId)
-                .orElseThrow(
-                        () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
-                ).stream()
+    public List<MenuResponseDto> getMenuList() {
+        return menuRepository.findAll()
+                .stream()
                 .map(Menu::toDto)
                 .toList();
     }
@@ -36,10 +34,8 @@ public class MenuService {
     }
 
     @Transactional
-    public void addMenuItem(List<MenuRequestDto> menuRequestDtoList) {
-        menuRepository.saveAll((menuRequestDtoList.stream()
-                .map(MenuRequestDto::toEntity))
-                .toList());
+    public void createMenu() {
+
     }
 
     @Transactional
