@@ -38,7 +38,7 @@ public class Menu {
 
 
     @ManyToMany(mappedBy = "menus")
-    private Set<MenuStore> menuStores = new HashSet<>();
+    private final Set<MenuStore> menuStores = new HashSet<>();
 
     @CreatedDate
     @Column(nullable = false)

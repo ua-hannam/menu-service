@@ -18,15 +18,14 @@ public class MenuRequestDto {
 
     private long menuGroupId;
 
-    private long catalogId;
+    private long categoryId;
 
     public Menu toEntity() {
         return Menu.builder()
                 .menuName(menuName)
-                .menuPrice(menuPrice)
                 .menuDesc(menuDesc)
                 .menuGroup(new MenuGroup(menuGroupId))
-                .catalog(new Category(catalogId))
+                .category(new Category(categoryId))
                 .build();
     }
 }

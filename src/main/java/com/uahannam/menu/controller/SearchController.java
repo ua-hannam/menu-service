@@ -31,13 +31,11 @@ public class SearchController {
      *
      * @return ResponseEntity<List<String>> 메뉴 리스트 반환
      */
-    @GetMapping("")
-    public ResponseEntity<List<MenuResponseDto>> getMenuList() {
-        log.info("getMenuList");
-        List<MenuResponseDto> menuList = menuService.getMenuList();
-        log.info("menuList : {}", menuList);
-        return ResponseEntity.ok().body(menuList);
-    }
+//    @GetMapping("")
+//    public ResponseEntity<List<MenuResponseDto>> getMenuList() {
+//        log.info("getMenuList");
+//        return ResponseEntity.ok().body();
+//    }
 
     /**
      * 메뉴 상세 정보 조회
@@ -63,7 +61,6 @@ public class SearchController {
     @PostMapping("")
     public ResponseEntity<Void> createMenu() {
         log.info("createMenu");
-        menuService.createMenu();
         log.info("createMenu : success");
         return ResponseEntity.ok().build();
     }
@@ -78,7 +75,6 @@ public class SearchController {
     @PatchMapping("")
     public ResponseEntity<Void> updateMenu(@RequestBody @Valid MenuRequestDto menuRequestDto) {
         log.info("updateMenu");
-        menuService.updateMenu(menuRequestDto);
         log.info("updateMenu : success");
         return ResponseEntity.ok().build();
     }
@@ -86,7 +82,6 @@ public class SearchController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
         log.info("deleteMenu");
-        menuService.deleteMenu(id);
         log.info("deleteMenu : success");
         return ResponseEntity.ok().build();
     }

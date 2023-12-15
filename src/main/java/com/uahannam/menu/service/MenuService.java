@@ -43,12 +43,13 @@ public class MenuService {
     }
 
     @Transactional
-    public void updateMenu(MenuRequestDto menuRequestDto) {
-
+    public void updateMenuItem(MenuRequestDto menuRequestDto) {
+        menuRepository.save(menuRequestDto.toEntity());
     }
 
     @Transactional
-    public void deleteMenu(Long id) {
+    public void deleteMenuItem(Long itemId) {
+        menuRepository.deleteById(itemId);
     }
 
 }
