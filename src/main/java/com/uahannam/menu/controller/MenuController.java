@@ -1,5 +1,6 @@
 package com.uahannam.menu.controller;
 
+import com.uahannam.menu.domain.MenuStore;
 import com.uahannam.menu.domain.MenuStoreId;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
@@ -29,14 +30,14 @@ public class MenuController {
     /**
      * 메뉴 가게 전체 리스트 조회
      *
-     * @param menuStoreId 메뉴 가게 아이디
-     * @return ResponseEntity<List < String>> 메뉴 가게 전체 리스트 반환
+     * @param menuStoreId 메뉴 메장 아이디
+     * @return ResponseEntity<List < MenuStore>> 메뉴 가게 전체 리스트 반환
      * @since 2023. 11. 23
      */
     @GetMapping("")
-    public ResponseEntity<List<MenuResponseDto>> getMenuList(MenuStoreId menuStoreId) {
+    public ResponseEntity<List<MenuStore>> getMenuList(MenuStoreId menuStoreId) {
         log.info("getMenuList");
-        List<MenuResponseDto> menuList = menuService.getMenuList(menuStoreId);
+        List<MenuStore> menuList = menuService.getMenuList(menuStoreId);
         log.info("menuList : {}", menuList);
         return ResponseEntity.ok().body(menuList);
     }
@@ -81,7 +82,7 @@ public class MenuController {
     @PatchMapping("/items/{itemId}")
     public ResponseEntity<Void> updateMenuItem(@PathVariable Long itemId, @RequestBody MenuRequestDto menuRequestDto) {
         log.info("updateMenuItem");
-        menuService.updateMenuItem(menuRequestDto);
+        menuService.updateMenuItem(itemId, menuRequestDto);
         log.info("updateMenuItem : success");
         return ResponseEntity.ok().build();
     }

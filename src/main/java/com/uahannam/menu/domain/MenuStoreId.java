@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode
 public class MenuStoreId implements Serializable {
 
@@ -23,6 +23,5 @@ public class MenuStoreId implements Serializable {
         this.menuId = menuId;
         this.storeId = storeId;
     }
-
 }
 

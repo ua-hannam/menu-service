@@ -46,5 +46,6 @@ public class MenuStore implements Persistable<MenuStoreId> {
     public boolean isNew() {
         return regDate == null;
     }
+
 }
 

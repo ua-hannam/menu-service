@@ -1,12 +1,14 @@
 package com.uahannam.menu.service;
 
 import com.uahannam.menu.domain.Menu;
+import com.uahannam.menu.domain.MenuStore;
 import com.uahannam.menu.domain.MenuStoreId;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
 import com.uahannam.menu.exception.ErrorCode;
 import com.uahannam.menu.exception.MenuException;
 import com.uahannam.menu.repository.MenuRepository;
+import com.uahannam.menu.repository.MenuStoreRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,14 +22,13 @@ import java.util.List;
 public class MenuService {
 
     private final MenuRepository menuRepository;
+    private final MenuStoreRepository menuStoreRepository;
 
-    public List<MenuResponseDto> getMenuList(MenuStoreId menuStoreId) {
-        return menuRepository.findByStoreId(menuStoreId)
+    public List<MenuStore> getMenuList(MenuStoreId menuStoreId) {
+        return menuStoreRepository.findByMenuStoreId(menuStoreId)
                 .orElseThrow(
                         () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
-                ).stream()
-                .map(Menu::toDto)
-                .toList();
+                );
     }
 
     public MenuResponseDto getMenuById(Long menuId) {
@@ -44,8 +45,8 @@ public class MenuService {
     }
 
     @Transactional
-    public void updateMenuItem(MenuRequestDto menuRequestDto) {
-        menuRepository.save(menuRequestDto.toEntity());
+    public void updateMenuItem(Long itemId, MenuRequestDto menuRequestDto) {
+        menuRepository.save(menuRequestDto.toEntity(itemId));
     }
 
     @Transactional

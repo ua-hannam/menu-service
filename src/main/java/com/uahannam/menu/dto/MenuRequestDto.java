@@ -28,4 +28,14 @@ public class MenuRequestDto {
                 .category(new Category(categoryId))
                 .build();
     }
+
+    public Menu toEntity(Long itemId) {
+        return Menu.builder()
+                .menuId(itemId)
+                .menuName(menuName)
+                .menuDesc(menuDesc)
+                .menuGroup(new MenuGroup(menuGroupId))
+                .category(new Category(categoryId))
+                .build();
+    }
 }
