@@ -11,29 +11,30 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "catalog")
+@Table(name = "category")
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class Category {
 
     @Id
-    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long catalogId;
+    @Column(name = "category_id")
+    private Long categoryId;
 
-    @Column(nullable = false)
-    private String catalogName;
+    @Column(name = "category_name", nullable = false)
+    private String categoryName;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(name = "reg_date")
     private LocalDateTime regDate;
 
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(name = "mod_date")
     private LocalDateTime modDate;
 
-    public Category(long catalogId) {
-        this.catalogId = catalogId;
+    public Category(long categoryId) {
+        this.categoryId = categoryId;
     }
 }
+

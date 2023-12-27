@@ -7,9 +7,10 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "menu")
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,14 +19,14 @@ import java.util.Set;
 public class Menu {
 
     @Id
-    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "menu_id")
     private Long menuId;
 
-    @Column(nullable = false)
+    @Column(name = "menu_name", nullable = false)
     private String menuName;
 
-    @Column
+    @Column(name = "menu_desc")
     private String menuDesc;
 
     @ManyToOne
@@ -37,8 +38,8 @@ public class Menu {
     private Category category;
 
 
-    @ManyToMany(mappedBy = "menus")
-    private final Set<MenuStore> menuStores = new HashSet<>();
+    @OneToMany(mappedBy = "menu", orphanRemoval = true, cascade = CascadeType.ALL)
+    private final List<MenuStore> store = new ArrayList<>();
 
     @CreatedDate
     @Column(nullable = false)
@@ -53,6 +54,15 @@ public class Menu {
                 .menuName(menuName)
                 .menuDesc(menuDesc)
                 .build();
+    }
+
+    public void setStore(List<MenuStore> list) {
+        for (MenuStore menuStore : list) {
+            if (!this.store.contains(menuStore)) {
+                this.store.add(menuStore);
+                menuStore.setParent(this);
+            }
+        }
     }
 
 }

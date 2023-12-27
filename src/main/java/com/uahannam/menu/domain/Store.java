@@ -1,21 +1,21 @@
 package com.uahannam.menu.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
-
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "store_id", nullable = false)
+    private Long storeId;
 
-    @Column(nullable = false)
+    @Column(name = "store_name")
     private String storeName;
-
-    @ManyToMany(mappedBy = "stores")
-    private Set<MenuStore> menuStores = new HashSet<>();
 
 }
 

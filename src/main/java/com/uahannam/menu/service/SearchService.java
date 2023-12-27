@@ -1,11 +1,10 @@
 package com.uahannam.menu.service;
 
-import com.uahannam.menu.domain.Menu;
+import com.uahannam.menu.domain.Search;
 import com.uahannam.menu.dto.MenuRequestDto;
-import com.uahannam.menu.dto.MenuResponseDto;
-import com.uahannam.menu.exception.ErrorCode;
-import com.uahannam.menu.exception.MenuException;
-import com.uahannam.menu.repository.MenuRepository;
+import com.uahannam.menu.dto.SearchRequestDto;
+import com.uahannam.menu.dto.SearchResponseDto;
+import com.uahannam.menu.repository.SearchRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,19 +17,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class SearchService {
 
-    private final MenuRepository menuRepository;
+    private final SearchRepository searchRepository;
 
-    public List<MenuResponseDto> getMenuList() {
-        return menuRepository.findAll()
+    public List<SearchResponseDto> search(SearchRequestDto searchRequestDto) {
+        return searchRepository.findAll()
                 .stream()
-                .map(Menu::toDto)
+                .map(Search::toDto)
                 .toList();
-    }
-
-    public MenuResponseDto getMenuById(Long menuId) {
-        return menuRepository.findById(menuId).orElseThrow(
-                () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
-        ).toDto();
     }
 
     @Transactional

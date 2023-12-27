@@ -16,28 +16,28 @@ import java.time.LocalDateTime;
 public class Image {
 
     @Id
-    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "image_id")
     private Long imageId;
 
-    @Column(nullable = false)
+    @Column(name = "image_name", nullable = false)
     private String imageName;
 
-    @Column(nullable = false)
+    @Column(name = "image_original_name", nullable = false)
     private String imageOriginalName;
 
-    @Column(nullable = false)
+    @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @Column(nullable = false)
+    @Column(name = "image_desc", nullable = false)
     private String imageDesc;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(name = "reg_date")
     private LocalDateTime regDate;
 
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(name = "mod_date")
     private LocalDateTime modDate;
 
 }

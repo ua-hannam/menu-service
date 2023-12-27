@@ -15,19 +15,19 @@ import java.time.LocalDateTime;
 public class MenuGroup {
 
     @Id
-    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "menu_group_id")
     private Long menuGroupId;
 
-    @Column(nullable = false)
+    @Column(name = "menu_group_name", nullable = false)
     private String menuGroupName;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(name = "reg_date")
     private LocalDateTime regDate;
 
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(name = "mod_date")
     private LocalDateTime modDate;
 
     public MenuGroup(long menuGroupId) {
