@@ -2,6 +2,7 @@ package com.uahannam.menu.controller;
 
 import com.uahannam.menu.domain.MenuStore;
 import com.uahannam.menu.domain.MenuStoreId;
+import com.uahannam.menu.dto.CategoryRequestDto;
 import com.uahannam.menu.dto.CategoryResponseDto;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
@@ -31,10 +32,10 @@ public class MenuController {
     private final CategoryService categoryService;
 
     /**
-     * 메뉴 가게 전체 리스트 조회
+     * 가게 기반 메뉴 리스트 반환
      *
      * @param menuStoreId 메뉴 메장 아이디
-     * @return ResponseEntity<List < MenuStore>> 메뉴 가게 전체 리스트 반환
+     * @return ResponseEntity<List < MenuStore>> 메뉴 리스트 반환
      * @since 2023. 11. 23
      */
     @GetMapping("")
@@ -49,13 +50,13 @@ public class MenuController {
      * 메뉴 상세 조회
      *
      * @param itemId 메뉴 아이템 아이디
-     * @return ResponseEntity<String> 메뉴 상세 정보 반환
+     * @return ResponseEntity<MenuResponseDto> 메뉴 상세 정보 반환
      * @since 2023. 11. 23
      */
     @GetMapping("/items/{itemId}")
-    public ResponseEntity<MenuResponseDto> getMenuById(@PathVariable Long itemId) {
-        log.info("getMenuById");
-        MenuResponseDto menu = menuService.getMenuById(itemId);
+    public ResponseEntity<MenuResponseDto> getMenuByItemId(@PathVariable Long itemId) {
+        log.info("getMenuByItemId");
+        MenuResponseDto menu = menuService.getMenuByItemId(itemId);
         log.info("menu : {}", menu);
         return ResponseEntity.ok().body(menu);
     }
@@ -105,13 +106,15 @@ public class MenuController {
         return ResponseEntity.ok().build();
     }
 
+    /*-----------------------------------------------------------------------------------------*/
+
     /**
-     * 카테고리 전체 메뉴 리스트 조회
+     * 카테고리 전체 리스트 조회
      *
-     * @return ResponseEntity<List < MenuStore>> 메뉴 가게 전체 리스트 반환
+     * @return ResponseEntity<List < CategoryResponseDto>> 카테고리 전체 리스트 반환
      * @since 2024. 01. 08
      */
-    @GetMapping("")
+    @GetMapping("/categories")
     public ResponseEntity<List<CategoryResponseDto>> getCategoryList() {
         log.info("getCategoryList");
         List<CategoryResponseDto> categoryList = categoryService.getCategoryList();
@@ -120,32 +123,34 @@ public class MenuController {
     }
 
     /**
-     * 메뉴 상세 조회
+     * 카테고리 기반 메뉴 조회
      *
-     * @param itemId 메뉴 아이템 아이디
-     * @return ResponseEntity<String> 메뉴 상세 정보 반환
-     * @since 2023. 11. 23
+     * @param category_id 카테고리 아이디
+     * @return ResponseEntity<List < MenuResponseDto>> 메뉴 리스트 반환
+     * @// TODO: 2024-01-09
+     * @since 2024. 01. 09
      */
-    @GetMapping("/items/{itemId}")
-    public ResponseEntity<MenuResponseDto> getCategory(@PathVariable Long itemId) {
-        log.info("getMenuById");
-        MenuResponseDto menu = menuService.getMenuById(itemId);
-        log.info("menu : {}", menu);
-        return ResponseEntity.ok().body(menu);
+    @GetMapping("/categories/{category_id}")
+    public ResponseEntity<List<MenuResponseDto>> getMenuByCategory(@PathVariable Long category_id) {
+        log.info("getMenuByCategory");
+        List<MenuResponseDto> menuList = menuService.getMenuByCategoryId(category_id);
+        log.info("menuList : {}", menuList);
+        return ResponseEntity.ok().body(menuList);
     }
 
     /**
-     * 메뉴 아이템 추가
+     * 카테고리 추가
      *
-     * @param menuRequestDtoList 메뉴 아이템 추가 정보 리스트
-     * @return ResponseEntity<Void> 메뉴 아이템 추가 성공 여부 반환
-     * @since 2023. 11. 23
+     * @param categoryRequestDto 카테고리 추가 정보
+     * @return ResponseEntity<Void> 카테고리 추가 성공 여부 반환
+     * @// TODO: 2024-01-09
+     * @since 2024. 01. 09
      */
-    @PostMapping("/items")
-    public ResponseEntity<Void> addCategory(@RequestBody List<MenuRequestDto> menuRequestDtoList) {
-        log.info("addMenuItem");
-        menuService.addMenuItem(menuRequestDtoList);
-        log.info("addMenuItem : success");
+    @PostMapping("/categories")
+    public ResponseEntity<Void> addCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+        log.info("addCategory");
+        categoryService.addCategory(categoryRequestDto);
+        log.info("addCategory : success");
         return ResponseEntity.ok().build();
     }
 
@@ -154,28 +159,30 @@ public class MenuController {
      *
      * @param menuRequestDto 메뉴 수정 정보
      * @return ResponseEntity<Void> 메뉴 수정 성공 여부 반환
-     * @since 2023. 11. 23
+     * @// TODO: 2024-01-09
+     * @since 2024. 01. 09
      */
-    @PatchMapping("/items/{itemId}")
-    public ResponseEntity<Void> updateCategory(@PathVariable Long itemId, @RequestBody MenuRequestDto menuRequestDto) {
-        log.info("updateMenuItem");
-        menuService.updateMenuItem(itemId, menuRequestDto);
-        log.info("updateMenuItem : success");
+    @PatchMapping("/categories/{category_id}")
+    public ResponseEntity<Void> updateCategory(@PathVariable Long category_id, @RequestBody CategoryRequestDto categoryRequestDto) {
+        log.info("updateCategory");
+        categoryService.updateCategory(category_id, categoryRequestDto);
+        log.info("updateCategory : success");
         return ResponseEntity.ok().build();
     }
 
     /**
      * 메뉴 삭제
      *
-     * @param itemId 메뉴 아이템 아이디
+     * @param category_id 메뉴 아이템 아이디
      * @return ResponseEntity<Void> 메뉴 삭제 성공 여부 반환
-     * @since 2023. 12. 15
+     * @// TODO: 2024-01-09
+     * @since 2024. 01. 09
      */
-    @DeleteMapping("/items/{itemId}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long itemId) {
-        log.info("deleteMenuItem");
-        menuService.deleteMenuItem(itemId);
-        log.info("deleteMenuItem : success");
+    @DeleteMapping("/categories/{category_id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long category_id) {
+        log.info("deleteCategory");
+        menuService.deleteMenuItem(category_id);
+        log.info("deleteCategory : success");
         return ResponseEntity.ok().build();
     }
 }

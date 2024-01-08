@@ -31,7 +31,7 @@ public class MenuService {
                 );
     }
 
-    public MenuResponseDto getMenuById(Long menuId) {
+    public MenuResponseDto getMenuByItemId(Long menuId) {
         return menuRepository.findById(menuId).orElseThrow(
                 () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
         ).toDto();
@@ -54,4 +54,12 @@ public class MenuService {
         menuRepository.deleteById(itemId);
     }
 
+    public List<MenuResponseDto> getMenuByCategoryId(Long category_id) {
+        return menuRepository.findAllByCategoryId(category_id)
+                .orElseThrow(
+                        () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
+                ).stream()
+                .map(Menu::toDto)
+                .toList();
+    }
 }

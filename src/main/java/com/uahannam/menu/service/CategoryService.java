@@ -2,6 +2,7 @@ package com.uahannam.menu.service;
 
 import com.uahannam.menu.domain.Category;
 import com.uahannam.menu.domain.Menu;
+import com.uahannam.menu.dto.CategoryRequestDto;
 import com.uahannam.menu.dto.CategoryResponseDto;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
@@ -28,5 +29,19 @@ public class CategoryService {
                 .stream()
                 .map(Category::toDto)
                 .toList();
+    }
+
+    @Transactional
+    public void addCategory(CategoryRequestDto categoryRequestDto) {
+        categoryRepository.findByCategoryName(categoryRequestDto.getCategoryName())
+                        .ifPresent(category -> {
+                            throw new MenuException(ErrorCode.DUPLICATE_MENU_ITEM, ErrorCode.DUPLICATE_MENU_ITEM.getHttpStatus());
+                        });
+        categoryRepository.save(categoryRequestDto.toEntity());
+    }
+
+    @Transactional
+    public void updateCategory(Long category_id, CategoryRequestDto categoryRequestDto) {
+        categoryRepository.save(categoryRequestDto.toEntity(category_id));
     }
 }
