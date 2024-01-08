@@ -2,8 +2,10 @@ package com.uahannam.menu.controller;
 
 import com.uahannam.menu.domain.MenuStore;
 import com.uahannam.menu.domain.MenuStoreId;
+import com.uahannam.menu.dto.CategoryResponseDto;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
+import com.uahannam.menu.service.CategoryService;
 import com.uahannam.menu.service.MenuService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import java.util.List;
 public class MenuController {
 
     private final MenuService menuService;
+    private final CategoryService categoryService;
 
     /**
      * 메뉴 가게 전체 리스트 조회
@@ -96,6 +99,80 @@ public class MenuController {
      */
     @DeleteMapping("/items/{itemId}")
     public ResponseEntity<Void> deleteMenuItem(@PathVariable Long itemId) {
+        log.info("deleteMenuItem");
+        menuService.deleteMenuItem(itemId);
+        log.info("deleteMenuItem : success");
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 카테고리 전체 메뉴 리스트 조회
+     *
+     * @return ResponseEntity<List < MenuStore>> 메뉴 가게 전체 리스트 반환
+     * @since 2024. 01. 08
+     */
+    @GetMapping("")
+    public ResponseEntity<List<CategoryResponseDto>> getCategoryList() {
+        log.info("getCategoryList");
+        List<CategoryResponseDto> categoryList = categoryService.getCategoryList();
+        log.info("categoryList : {}", categoryList);
+        return ResponseEntity.ok().body(categoryList);
+    }
+
+    /**
+     * 메뉴 상세 조회
+     *
+     * @param itemId 메뉴 아이템 아이디
+     * @return ResponseEntity<String> 메뉴 상세 정보 반환
+     * @since 2023. 11. 23
+     */
+    @GetMapping("/items/{itemId}")
+    public ResponseEntity<MenuResponseDto> getCategory(@PathVariable Long itemId) {
+        log.info("getMenuById");
+        MenuResponseDto menu = menuService.getMenuById(itemId);
+        log.info("menu : {}", menu);
+        return ResponseEntity.ok().body(menu);
+    }
+
+    /**
+     * 메뉴 아이템 추가
+     *
+     * @param menuRequestDtoList 메뉴 아이템 추가 정보 리스트
+     * @return ResponseEntity<Void> 메뉴 아이템 추가 성공 여부 반환
+     * @since 2023. 11. 23
+     */
+    @PostMapping("/items")
+    public ResponseEntity<Void> addCategory(@RequestBody List<MenuRequestDto> menuRequestDtoList) {
+        log.info("addMenuItem");
+        menuService.addMenuItem(menuRequestDtoList);
+        log.info("addMenuItem : success");
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 메뉴 수정
+     *
+     * @param menuRequestDto 메뉴 수정 정보
+     * @return ResponseEntity<Void> 메뉴 수정 성공 여부 반환
+     * @since 2023. 11. 23
+     */
+    @PatchMapping("/items/{itemId}")
+    public ResponseEntity<Void> updateCategory(@PathVariable Long itemId, @RequestBody MenuRequestDto menuRequestDto) {
+        log.info("updateMenuItem");
+        menuService.updateMenuItem(itemId, menuRequestDto);
+        log.info("updateMenuItem : success");
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 메뉴 삭제
+     *
+     * @param itemId 메뉴 아이템 아이디
+     * @return ResponseEntity<Void> 메뉴 삭제 성공 여부 반환
+     * @since 2023. 12. 15
+     */
+    @DeleteMapping("/items/{itemId}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long itemId) {
         log.info("deleteMenuItem");
         menuService.deleteMenuItem(itemId);
         log.info("deleteMenuItem : success");

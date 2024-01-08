@@ -1,5 +1,6 @@
 package com.uahannam.menu.domain;
 
+import com.uahannam.menu.dto.MenuStoreResponseDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -45,6 +46,14 @@ public class MenuStore implements Persistable<MenuStoreId> {
     @Override
     public boolean isNew() {
         return regDate == null;
+    }
+
+    public MenuStoreResponseDto toDto() {
+        return MenuStoreResponseDto.builder()
+                .menuName(this.menu.getMenuName())
+                .menuDesc(this.menu.getMenuDesc())
+                .menuPrice(this.price)
+                .build();
     }
 
 }

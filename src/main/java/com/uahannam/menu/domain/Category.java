@@ -1,5 +1,6 @@
 package com.uahannam.menu.domain;
 
+import com.uahannam.menu.dto.CategoryResponseDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,13 @@ public class Category {
 
     public Category(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public CategoryResponseDto toDto() {
+        return CategoryResponseDto.builder()
+                .categoryId(this.categoryId)
+                .categoryName(this.categoryName)
+                .build();
     }
 }
 
