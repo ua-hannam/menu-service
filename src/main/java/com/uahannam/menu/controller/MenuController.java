@@ -54,7 +54,7 @@ public class MenuController {
      * @since 2023. 11. 23
      */
     @GetMapping("/items/{itemId}")
-    public ResponseEntity<MenuResponseDto> getMenuByItemId(@PathVariable Long itemId) {
+    public ResponseEntity<MenuResponseDto> getMenuByItemId(@PathVariable(name = "itemId") Long itemId) {
         log.info("getMenuByItemId");
         MenuResponseDto menu = menuService.getMenuByItemId(itemId);
         log.info("menu : {}", menu);
@@ -84,7 +84,7 @@ public class MenuController {
      * @since 2023. 11. 23
      */
     @PatchMapping("/items/{itemId}")
-    public ResponseEntity<Void> updateMenuItem(@PathVariable Long itemId, @RequestBody MenuRequestDto menuRequestDto) {
+    public ResponseEntity<Void> updateMenuItem(@PathVariable(name = "itemId") Long itemId, @RequestBody MenuRequestDto menuRequestDto) {
         log.info("updateMenuItem");
         menuService.updateMenuItem(itemId, menuRequestDto);
         log.info("updateMenuItem : success");
@@ -99,7 +99,7 @@ public class MenuController {
      * @since 2023. 12. 15
      */
     @DeleteMapping("/items/{itemId}")
-    public ResponseEntity<Void> deleteMenuItem(@PathVariable Long itemId) {
+    public ResponseEntity<Void> deleteMenuItem(@PathVariable(name = "itemId") Long itemId) {
         log.info("deleteMenuItem");
         menuService.deleteMenuItem(itemId);
         log.info("deleteMenuItem : success");
@@ -125,15 +125,16 @@ public class MenuController {
     /**
      * 카테고리 기반 메뉴 조회
      *
-     * @param category_id 카테고리 아이디
+     * @param categoryId 카테고리 아이디
      * @return ResponseEntity<List < MenuResponseDto>> 메뉴 리스트 반환
      * @// TODO: 2024-01-09
      * @since 2024. 01. 09
      */
-    @GetMapping("/categories/{category_id}")
-    public ResponseEntity<List<MenuResponseDto>> getMenuByCategory(@PathVariable Long category_id) {
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<List<CategoryResponseDto>> getMenuByCategory(@PathVariable(name = "categoryId") Long categoryId) {
         log.info("getMenuByCategory");
-        List<MenuResponseDto> menuList = menuService.getMenuByCategoryId(category_id);
+//        List<MenuResponseDto> menuList = menuService.getMenuByCategoryId(categoryId);
+        List<CategoryResponseDto> menuList = categoryService.getMenuByCategoryId(categoryId);
         log.info("menuList : {}", menuList);
         return ResponseEntity.ok().body(menuList);
     }
@@ -157,13 +158,13 @@ public class MenuController {
     /**
      * 메뉴 수정
      *
-     * @param menuRequestDto 메뉴 수정 정보
+     * @param categoryRequestDto 메뉴 수정 정보
      * @return ResponseEntity<Void> 메뉴 수정 성공 여부 반환
      * @// TODO: 2024-01-09
      * @since 2024. 01. 09
      */
-    @PatchMapping("/categories/{category_id}")
-    public ResponseEntity<Void> updateCategory(@PathVariable Long category_id, @RequestBody CategoryRequestDto categoryRequestDto) {
+    @PatchMapping("/categories/{categoryId}")
+    public ResponseEntity<Void> updateCategory(@PathVariable(name = "categoryId") Long category_id, @RequestBody CategoryRequestDto categoryRequestDto) {
         log.info("updateCategory");
         categoryService.updateCategory(category_id, categoryRequestDto);
         log.info("updateCategory : success");
@@ -173,15 +174,15 @@ public class MenuController {
     /**
      * 메뉴 삭제
      *
-     * @param category_id 메뉴 아이템 아이디
+     * @param categoryId 메뉴 아이템 아이디
      * @return ResponseEntity<Void> 메뉴 삭제 성공 여부 반환
      * @// TODO: 2024-01-09
      * @since 2024. 01. 09
      */
-    @DeleteMapping("/categories/{category_id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long category_id) {
+    @DeleteMapping("/categories/{categoryId}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable(name = "categoryId") Long categoryId) {
         log.info("deleteCategory");
-        menuService.deleteMenuItem(category_id);
+        menuService.deleteMenuItem(categoryId);
         log.info("deleteCategory : success");
         return ResponseEntity.ok().build();
     }
