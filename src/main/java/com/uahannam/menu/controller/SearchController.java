@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 메뉴 컨트롤러
+ * 검색 컨트롤러
  *
  * @author swlee
- * @since 2023. 12. 14
+ * @since 2024. 01. 16
  */
 @Slf4j(topic = "SearchController")
 @RestController
@@ -29,7 +29,7 @@ public class SearchController {
      *
      * @param searchRequestDto 검색 요청
      * @return List<SearchResponseDto> 검색 결과 리스트 반환
-     * @since 2023. 12. 27
+     * @since 2024. 01. 16
      */
     @GetMapping("")
     public ResponseEntity<List<SearchResponseDto>> search(SearchRequestDto searchRequestDto) {
@@ -37,6 +37,21 @@ public class SearchController {
         List<SearchResponseDto> searchResponseDtoList = searchService.search(searchRequestDto);
         log.info("search result : {}", searchResponseDtoList);
         return ResponseEntity.ok().body(searchResponseDtoList);
+    }
+
+    /**
+     * 검색 기록 삭제
+     *
+     * @param searchRequestDto 검색 요청
+     * @return ResponseEntity<Void>
+     * @since 2024. 01. 16
+     */
+    @DeleteMapping("/history")
+    public ResponseEntity<Void> removeSearchHistory(SearchRequestDto searchRequestDto) {
+        log.info("remove search history");
+        searchService.removeSearchHistory(searchRequestDto);
+        log.info("remove success");
+        return ResponseEntity.ok().build();
     }
 
 }
