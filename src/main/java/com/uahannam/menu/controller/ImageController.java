@@ -55,7 +55,7 @@ public class ImageController {
      * @since 2023. 12. 27
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable(name = "id") Long id) {
         log.info("deleteMenu");
         log.info("deleteMenu : success");
         return ResponseEntity.ok().build();

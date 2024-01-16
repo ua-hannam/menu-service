@@ -44,4 +44,10 @@ public class CategoryService {
     public void updateCategory(Long category_id, CategoryRequestDto categoryRequestDto) {
         categoryRepository.save(categoryRequestDto.toEntity(category_id));
     }
+
+    public List<CategoryResponseDto> getMenuByCategoryId(Long categoryId) {
+        return categoryRepository.findMenuByCategoryId(categoryId).stream()
+                .map(Category::toDto)
+                .toList();
+    }
 }

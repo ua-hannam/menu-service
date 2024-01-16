@@ -54,8 +54,8 @@ public class MenuService {
         menuRepository.deleteById(itemId);
     }
 
-    public List<MenuResponseDto> getMenuByCategoryId(Long category_id) {
-        return menuRepository.findAllByCategoryId(category_id)
+    public List<MenuResponseDto> getMenuByCategoryId(Long categoryId) {
+        return menuRepository.findAllByCategoryId(categoryId)
                 .orElseThrow(
                         () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
                 ).stream()

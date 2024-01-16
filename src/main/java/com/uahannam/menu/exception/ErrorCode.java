@@ -15,7 +15,13 @@ public enum ErrorCode {
     MENU_ITEM_NOT_IN_MENU(HttpStatus.BAD_REQUEST, "Menu item not in menu"),
     MENU_ITEM_NOT_IN_ORDER(HttpStatus.BAD_REQUEST, "Menu item not in order"),
     MENU_ITEM_NOT_IN_CART(HttpStatus.BAD_REQUEST, "Menu item not in cart"),
-    MENU_ITEM_NOT_IN_WISHLIST(HttpStatus.BAD_REQUEST, "Menu item not in wishlist"),;
+    MENU_ITEM_NOT_IN_WISHLIST(HttpStatus.BAD_REQUEST, "Menu item not in wishlist"),
+
+    /*-----------------------------------------------------*/
+
+    DUPLICATE_CATEGORY_NAME(HttpStatus.BAD_REQUEST, "Duplicate category name"),
+    CATEGORY_NAME_NOT_FOUND(HttpStatus.NOT_FOUND, "Category name not found"),
+    CATEGORY_NAME_NOT_VALID(HttpStatus.BAD_REQUEST, "Category name not valid"),;
 
     public static final String ERROR_CODE_PREFIX = "ERR_";
     public static final String ERROR_CODE_SUFFIX = "_CODE";
