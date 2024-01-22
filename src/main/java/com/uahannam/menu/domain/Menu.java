@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 @Table(name = "menu")
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Menu {
 
@@ -43,11 +45,11 @@ public class Menu {
 
     @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime regDate;
+    private LocalDateTime regDate = LocalDateTime.now();
 
     @LastModifiedDate
     @Column(nullable = false)
-    private LocalDateTime modDate;
+    private LocalDateTime modDate = LocalDateTime.now();
 
     public MenuResponseDto toDto() {
         return MenuResponseDto.builder()

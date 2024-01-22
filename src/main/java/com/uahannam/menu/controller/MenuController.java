@@ -123,20 +123,33 @@ public class MenuController {
     }
 
     /**
-     * 카테고리 기반 메뉴 조회
+     * 카테고리 이름 조회
+     *
+     * @param categoryId 카테고리 아이디
+     * @return ResponseEntity<CategoryResponseDto> 카테고리 DTO 반환
+     * @since 2024. 01. 22
+     */
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<CategoryResponseDto> getCategoryName(@PathVariable(name = "categoryId") Long categoryId) {
+        log.info("getCategoryName");
+        CategoryResponseDto categoryNameById = categoryService.getCategoryNameById(categoryId);
+        log.info("category name : {}", categoryNameById);
+        return ResponseEntity.ok().body(categoryNameById);
+    }
+
+    /**
+     * 카테고리 메뉴 리스트 조회
      *
      * @param categoryId 카테고리 아이디
      * @return ResponseEntity<List < MenuResponseDto>> 메뉴 리스트 반환
-     * @// TODO: 2024-01-09
-     * @since 2024. 01. 09
+     * @since 2024. 01. 22
      */
-    @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<List<CategoryResponseDto>> getMenuByCategory(@PathVariable(name = "categoryId") Long categoryId) {
+    @GetMapping("/categories/{categoryId}/items")
+    public ResponseEntity<List<MenuResponseDto>> getMenuByCategory(@PathVariable(name = "categoryId") Long categoryId) {
         log.info("getMenuByCategory");
-//        List<MenuResponseDto> menuList = menuService.getMenuByCategoryId(categoryId);
-        List<CategoryResponseDto> menuList = categoryService.getMenuByCategoryId(categoryId);
-        log.info("menuList : {}", menuList);
-        return ResponseEntity.ok().body(menuList);
+        List<MenuResponseDto> menuListByCategoryId = menuService.getMenuListByCategoryId(categoryId);
+        log.info("menuList : {}", menuListByCategoryId);
+        return ResponseEntity.ok().body(menuListByCategoryId);
     }
 
     /**
@@ -144,7 +157,6 @@ public class MenuController {
      *
      * @param categoryRequestDto 카테고리 추가 정보
      * @return ResponseEntity<Void> 카테고리 추가 성공 여부 반환
-     * @// TODO: 2024-01-09
      * @since 2024. 01. 09
      */
     @PostMapping("/categories")

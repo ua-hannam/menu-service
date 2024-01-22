@@ -3,6 +3,7 @@ package com.uahannam.menu.service;
 import com.uahannam.menu.domain.Menu;
 import com.uahannam.menu.domain.MenuStore;
 import com.uahannam.menu.domain.MenuStoreId;
+import com.uahannam.menu.dto.CategoryResponseDto;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
 import com.uahannam.menu.exception.ErrorCode;
@@ -61,5 +62,11 @@ public class MenuService {
                 ).stream()
                 .map(Menu::toDto)
                 .toList();
+    }
+
+    public List<MenuResponseDto> getMenuListByCategoryId(Long categoryId) {
+        return menuRepository.findByCategoryCategoryId(categoryId).orElseThrow(
+                () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
+        ).stream().map(Menu::toDto).toList();
     }
 }

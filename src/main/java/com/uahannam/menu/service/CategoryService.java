@@ -1,15 +1,11 @@
 package com.uahannam.menu.service;
 
 import com.uahannam.menu.domain.Category;
-import com.uahannam.menu.domain.Menu;
 import com.uahannam.menu.dto.CategoryRequestDto;
 import com.uahannam.menu.dto.CategoryResponseDto;
-import com.uahannam.menu.dto.MenuRequestDto;
-import com.uahannam.menu.dto.MenuResponseDto;
 import com.uahannam.menu.exception.ErrorCode;
 import com.uahannam.menu.exception.MenuException;
 import com.uahannam.menu.repository.CategoryRepository;
-import com.uahannam.menu.repository.MenuRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,9 +30,9 @@ public class CategoryService {
     @Transactional
     public void addCategory(CategoryRequestDto categoryRequestDto) {
         categoryRepository.findByCategoryName(categoryRequestDto.getCategoryName())
-                        .ifPresent(category -> {
-                            throw new MenuException(ErrorCode.DUPLICATE_MENU_ITEM, ErrorCode.DUPLICATE_MENU_ITEM.getHttpStatus());
-                        });
+                .ifPresent(category -> {
+                    throw new MenuException(ErrorCode.DUPLICATE_MENU_ITEM, ErrorCode.DUPLICATE_MENU_ITEM.getHttpStatus());
+                });
         categoryRepository.save(categoryRequestDto.toEntity());
     }
 
@@ -45,9 +41,13 @@ public class CategoryService {
         categoryRepository.save(categoryRequestDto.toEntity(category_id));
     }
 
-    public List<CategoryResponseDto> getMenuByCategoryId(Long categoryId) {
-        return categoryRepository.findMenuByCategoryId(categoryId).stream()
-                .map(Category::toDto)
-                .toList();
+    public CategoryResponseDto getCategoryNameById(Long categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow(
+                () -> new MenuException(ErrorCode.CATEGORY_NAME_NOT_FOUND, ErrorCode.CATEGORY_NAME_NOT_FOUND.getHttpStatus())
+        ).toDto();
+    }
+
+    public List<CategoryResponseDto> getMenuListByCategoryId(Long categoryId) {
+        return categoryRepository.findMenuByCategoryId(categoryId).stream().map(Category::toDto).toList();
     }
 }

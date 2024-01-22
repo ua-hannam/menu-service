@@ -14,4 +14,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query("SELECT m FROM Menu m WHERE m.category.categoryId = :categoryId")
     Optional<List<Menu>> findAllByCategoryId(@Param("categoryId") Long categoryId);
 
+    Optional<List<Menu>> findByCategoryCategoryId(Long categoryId);
+
 }
