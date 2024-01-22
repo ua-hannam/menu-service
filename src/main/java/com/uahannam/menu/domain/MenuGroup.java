@@ -1,5 +1,7 @@
 package com.uahannam.menu.domain;
 
+import com.uahannam.menu.dto.MenuGroupResponseDto;
+import com.uahannam.menu.dto.MenuResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,6 +31,13 @@ public class MenuGroup {
     @LastModifiedDate
     @Column(name = "mod_date")
     private LocalDateTime modDate;
+
+    public MenuGroupResponseDto toDto() {
+        return MenuGroupResponseDto.builder()
+                .menuGroupId(this.menuGroupId)
+                .menuGroupName(this.menuGroupName)
+                .build();
+    }
 
     public MenuGroup(long menuGroupId) {
         this.menuGroupId = menuGroupId;

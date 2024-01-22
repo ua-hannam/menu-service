@@ -1,50 +1,40 @@
 package com.uahannam.menu.service;
 
-import com.uahannam.menu.domain.Menu;
-import com.uahannam.menu.dto.MenuRequestDto;
-import com.uahannam.menu.dto.MenuResponseDto;
+import com.uahannam.menu.dto.MenuGroupRequestDto;
+import com.uahannam.menu.dto.MenuGroupResponseDto;
 import com.uahannam.menu.exception.ErrorCode;
 import com.uahannam.menu.exception.MenuException;
-import com.uahannam.menu.repository.MenuRepository;
+import com.uahannam.menu.repository.MenuGroupRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Transactional(readOnly = true)
 public class MenuGroupService {
 
-    private final MenuRepository menuRepository;
+    private final MenuGroupRepository menuGroupRepository;
 
-    public List<MenuResponseDto> getMenuList() {
-        return menuRepository.findAll()
-                .stream()
-                .map(Menu::toDto)
-                .toList();
+    @Transactional
+    public void addMenuGroup(MenuGroupRequestDto menuGroupRequestDto) {
+        menuGroupRepository.save(menuGroupRequestDto.toEntity());
     }
 
-    public MenuResponseDto getMenuById(Long menuId) {
-        return menuRepository.findById(menuId).orElseThrow(
+    @Transactional
+    public void updateMenuGroup(Long meuGroupId, MenuGroupRequestDto menuGroupRequestDto) {
+        menuGroupRepository.save(menuGroupRequestDto.toEntity(meuGroupId));
+    }
+
+    @Transactional
+    public void deleteMenuGroup(Long menuGroupId) {
+        menuGroupRepository.deleteById(menuGroupId);
+    }
+
+    public MenuGroupResponseDto getMenuGroup(Long menuGroupId) {
+        return menuGroupRepository.findById(menuGroupId).orElseThrow(
                 () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
         ).toDto();
     }
-
-    @Transactional
-    public void createMenu() {
-
-    }
-
-    @Transactional
-    public void updateMenu(MenuRequestDto menuRequestDto) {
-
-    }
-
-    @Transactional
-    public void deleteMenu(Long id) {
-    }
-
 }
