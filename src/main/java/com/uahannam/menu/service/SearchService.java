@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,17 +28,8 @@ public class SearchService {
     }
 
     @Transactional
-    public void createMenu() {
-
-    }
-
-    @Transactional
-    public void updateMenu(MenuRequestDto menuRequestDto) {
-
-    }
-
-    @Transactional
-    public void deleteMenu(Long id) {
+    public void removeSearchHistory(SearchRequestDto searchRequestDto) {
+        searchRepository.delete(searchRequestDto.toEntity());
     }
 
 }

@@ -6,15 +6,18 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class SearchRequestDto {
+public class SearchHistoryRequestDto {
+
+    private Long searchHistoryId;
 
     private String searchKeyword;
-
-    private String regionId;
+    private Long memberId;
 
     public Search toEntity() {
         return Search.builder()
+                .searchHistoryId(searchHistoryId)
                 .searchKeyword(searchKeyword)
+                .memberId(memberId)
                 .build();
     }
 }
