@@ -2,19 +2,12 @@ package com.uahannam.menu.domain;
 
 import com.uahannam.menu.dto.SearchResponseDto;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.time.LocalDateTime;
-
+@Document(indexName = "search")
 @Entity
 @Table(name = "search")
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class Search extends BaseEntity {
 
     @Id
@@ -28,10 +21,20 @@ public class Search extends BaseEntity {
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 
+    protected Search() {
+    }
+
     public SearchResponseDto toDto() {
         return SearchResponseDto.builder()
                 .query(searchKeyword)
                 .build();
+    }
+
+    @PersistenceConstructor
+    public Search(Long searchHistoryId, String searchKeyword, Long memberId) {
+        this.searchHistoryId = searchHistoryId;
+        this.searchKeyword = searchKeyword;
+        this.memberId = memberId;
     }
 
 }

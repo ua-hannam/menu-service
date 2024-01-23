@@ -32,9 +32,9 @@ public class SearchController {
      * @since 2024. 01. 16
      */
     @GetMapping("")
-    public ResponseEntity<List<SearchResponseDto>> search(SearchRequestDto searchRequestDto) {
+    public ResponseEntity<List<MenuResponseDto>> search(@RequestParam("searchKeyword") String searchKeyword) {
         log.info("search");
-        List<SearchResponseDto> searchResponseDtoList = searchService.search(searchRequestDto);
+        List<MenuResponseDto> searchResponseDtoList = searchService.search(searchKeyword);
         log.info("search result : {}", searchResponseDtoList);
         return ResponseEntity.ok().body(searchResponseDtoList);
     }

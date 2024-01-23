@@ -49,11 +49,7 @@ public class MenuStore implements Persistable<MenuStoreId> {
     }
 
     public MenuStoreResponseDto toDto() {
-        return MenuStoreResponseDto.builder()
-                .menuName(this.menu.getMenuName())
-                .menuDesc(this.menu.getMenuDesc())
-                .menuPrice(this.price)
-                .build();
+        return MenuStoreResponseDto.builder().menuName(this.menu.getMenuName()).menuDesc(this.menu.getMenuDesc()).menuPrice(this.price).build();
     }
 
 }

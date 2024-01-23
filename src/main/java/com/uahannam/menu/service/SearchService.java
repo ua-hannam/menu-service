@@ -1,8 +1,11 @@
 package com.uahannam.menu.service;
 
-import com.uahannam.menu.domain.Search;
+import com.uahannam.menu.domain.Menu;
+import com.uahannam.menu.dto.MenuResponseDto;
 import com.uahannam.menu.dto.SearchRequestDto;
-import com.uahannam.menu.dto.SearchResponseDto;
+import com.uahannam.menu.exception.ErrorCode;
+import com.uahannam.menu.exception.MenuException;
+import com.uahannam.menu.repository.MenuRepository;
 import com.uahannam.menu.repository.SearchRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +20,18 @@ import java.util.List;
 public class SearchService {
 
     private final SearchRepository searchRepository;
+    private final MenuRepository menuRepository;
 
-    public List<SearchResponseDto> search(SearchRequestDto searchRequestDto) {
-        return searchRepository.findAll()
-                .stream()
-                .map(Search::toDto)
-                .toList();
+    public List<MenuResponseDto> search(String searchKeyword) {
+        return menuRepository.findAll(searchKeyword).orElseThrow(
+                () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
+        ).stream().map(Menu::toDto).toList();
+//        List<Menu> all = menuRepository.findAll(searchKeyword);
+//        System.out.println("COUNT : " + all.size());
+//        for (Menu menu : all) {
+//            System.out.println("TEST : " + menu.getMenuName());
+//        }
+//        return all.stream().map(Menu::toDto).toList();
     }
 
     @Transactional

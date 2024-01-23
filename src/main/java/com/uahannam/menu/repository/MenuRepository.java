@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
-    @Query("SELECT m FROM Menu m WHERE m.category.categoryId = :categoryId")
-    Optional<List<Menu>> findAllByCategoryId(@Param("categoryId") Long categoryId);
 
     Optional<List<Menu>> findByCategoryCategoryId(Long categoryId);
 
     Optional<List<Menu>> findByMenuGroupMenuGroupId(Long menuGroupId);
+
+    @Query("select e from Menu e where lower(e.menuName) like lower(concat('%',:searchKeyword,'%')) or lower(e.menuDesc) like lower(concat('%',:searchKeyword,'%'))")
+    Optional<List<Menu>> findAll(@Param("searchKeyword") String searchKeyword);
 }

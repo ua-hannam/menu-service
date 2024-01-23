@@ -1,13 +1,12 @@
 package com.uahannam.menu.domain;
 
 import com.uahannam.menu.dto.MenuGroupResponseDto;
-import com.uahannam.menu.dto.MenuResponseDto;
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "menu_group")
