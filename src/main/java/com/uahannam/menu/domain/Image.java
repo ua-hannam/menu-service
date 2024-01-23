@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Image {
+public class Image extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,13 +31,5 @@ public class Image {
 
     @Column(name = "image_desc", nullable = false)
     private String imageDesc;
-
-    @CreatedDate
-    @Column(name = "reg_date")
-    private LocalDateTime regDate;
-
-    @LastModifiedDate
-    @Column(name = "mod_date")
-    private LocalDateTime modDate;
 
 }

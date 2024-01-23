@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Search {
+public class Search extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +27,6 @@ public class Search {
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;
-
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime regDate;
 
     public SearchResponseDto toDto() {
         return SearchResponseDto.builder()

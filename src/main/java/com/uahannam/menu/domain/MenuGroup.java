@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class MenuGroup {
+public class MenuGroup extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +23,6 @@ public class MenuGroup {
 
     @Column(name = "menu_group_name", nullable = false)
     private String menuGroupName;
-
-    @CreatedDate
-    @Column(name = "reg_date")
-    private LocalDateTime regDate;
-
-    @LastModifiedDate
-    @Column(name = "mod_date")
-    private LocalDateTime modDate;
 
     public MenuGroupResponseDto toDto() {
         return MenuGroupResponseDto.builder()

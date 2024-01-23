@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-public class Menu {
+public class Menu extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,17 +39,8 @@ public class Menu {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-
     @OneToMany(mappedBy = "menu", orphanRemoval = true, cascade = CascadeType.ALL)
     private final List<MenuStore> store = new ArrayList<>();
-
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime regDate = LocalDateTime.now();
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private LocalDateTime modDate = LocalDateTime.now();
 
     public MenuResponseDto toDto() {
         return MenuResponseDto.builder()
