@@ -27,10 +27,7 @@ public class Category extends BaseEntity {
     }
 
     public CategoryResponseDto toDto() {
-        return CategoryResponseDto.builder()
-                .categoryId(this.categoryId)
-                .categoryName(this.categoryName)
-                .build();
+        return CategoryResponseDto.builder().categoryId(this.categoryId).categoryName(this.categoryName).build();
     }
 
 }

@@ -1,7 +1,6 @@
 package com.uahannam.menu.service;
 
 import com.uahannam.menu.domain.Search;
-import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.SearchRequestDto;
 import com.uahannam.menu.dto.SearchResponseDto;
 import com.uahannam.menu.repository.SearchRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)

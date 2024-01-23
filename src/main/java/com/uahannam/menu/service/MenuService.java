@@ -3,12 +3,10 @@ package com.uahannam.menu.service;
 import com.uahannam.menu.domain.Menu;
 import com.uahannam.menu.domain.MenuStore;
 import com.uahannam.menu.domain.MenuStoreId;
-import com.uahannam.menu.dto.MenuGroupRequestDto;
 import com.uahannam.menu.dto.MenuRequestDto;
 import com.uahannam.menu.dto.MenuResponseDto;
 import com.uahannam.menu.exception.ErrorCode;
 import com.uahannam.menu.exception.MenuException;
-import com.uahannam.menu.repository.MenuGroupRepository;
 import com.uahannam.menu.repository.MenuRepository;
 import com.uahannam.menu.repository.MenuStoreRepository;
 import lombok.AccessLevel;
@@ -24,7 +22,6 @@ import java.util.List;
 public class MenuService {
 
     private final MenuRepository menuRepository;
-    private final MenuGroupRepository menuGroupRepository;
     private final MenuStoreRepository menuStoreRepository;
 
     public List<MenuStore> getMenuList(MenuStoreId menuStoreId) {
@@ -57,15 +54,6 @@ public class MenuService {
         menuRepository.deleteById(itemId);
     }
 
-    public List<MenuResponseDto> getMenuByCategoryId(Long categoryId) {
-        return menuRepository.findAllByCategoryId(categoryId)
-                .orElseThrow(
-                        () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
-                ).stream()
-                .map(Menu::toDto)
-                .toList();
-    }
-
     public List<MenuResponseDto> getMenuListByCategoryId(Long categoryId) {
         return menuRepository.findByCategoryCategoryId(categoryId).orElseThrow(
                 () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
@@ -76,20 +64,5 @@ public class MenuService {
         return menuRepository.findByMenuGroupMenuGroupId(menuGroupId).orElseThrow(
                 () -> new MenuException(ErrorCode.MENU_ITEM_NOT_FOUND, ErrorCode.MENU_ITEM_NOT_FOUND.getHttpStatus())
         ).stream().map(Menu::toDto).toList();
-    }
-
-    @Transactional
-    public void addMenuGroup(MenuGroupRequestDto menuGroupRequestDto) {
-        menuGroupRepository.save(menuGroupRequestDto.toEntity());
-    }
-
-    @Transactional
-    public void updateMenuGroup(Long meuGroupId, MenuGroupRequestDto menuGroupRequestDto) {
-        menuGroupRepository.save(menuGroupRequestDto.toEntity(meuGroupId));
-    }
-
-    @Transactional
-    public void deleteMenuGroup(Long menuGroupId) {
-        menuGroupRepository.deleteById(menuGroupId);
     }
 }

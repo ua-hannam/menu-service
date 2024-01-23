@@ -47,10 +47,6 @@ public class CategoryService {
         ).toDto();
     }
 
-    public List<CategoryResponseDto> getMenuListByCategoryId(Long categoryId) {
-        return categoryRepository.findMenuByCategoryId(categoryId).stream().map(Category::toDto).toList();
-    }
-
     @Transactional
     public void deleteCategory(Long categoryId) {
         categoryRepository.deleteById(categoryId);
