@@ -2,6 +2,8 @@ server:
   port: 40001
 
 spring:
+  application:
+    name: menu-service
   datasource:
     url: jdbc:h2:mem:menu
     driverClassName: org.h2.Driver
@@ -10,10 +12,10 @@ spring:
   h2:
     console:
       enabled: true
-#    url: jdbc:mysql://localhost:3306/uahannam
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: 12345678
+  #    url: jdbc:mysql://localhost:3306/uahannam
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    username: root
+  #    password: 12345678
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
@@ -29,3 +31,9 @@ logging:
         type:
           descriptor:
             sql: trace
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: false
+    fetch-registry: false
