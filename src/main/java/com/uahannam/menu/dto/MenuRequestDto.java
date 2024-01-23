@@ -21,6 +21,7 @@ public class MenuRequestDto {
     private long catalogId;
 
     public Menu toEntity() {
+        //test
         return Menu.builder()
                 .menuName(menuName)
                 .menuPrice(menuPrice)
