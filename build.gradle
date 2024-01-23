@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.sonarqube' version '4.4.1.3373'
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
 }  
@@ -34,6 +35,15 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+sonar {
+    properties {
+        property 'sonar.projectKey', 'ua-hannam_menu-service'
+        property 'sonar.organization', 'msa2024'
+        property 'sonar.host.url', 'https://sonarcloud.io'
+    }
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()
