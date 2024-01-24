@@ -7,7 +7,7 @@ import lombok.Getter;
 @Builder
 public class SearchResponseDto {
 
-    private String query;
+    private String searchKeyword;
 
     private String regionId;
 

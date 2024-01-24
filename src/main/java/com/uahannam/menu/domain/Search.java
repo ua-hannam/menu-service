@@ -2,12 +2,14 @@ package com.uahannam.menu.domain;
 
 import com.uahannam.menu.dto.SearchResponseDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "search")
+//@Document(indexName = "search")
 @Entity
 @Table(name = "search")
+@Builder
 public class Search extends BaseEntity {
 
     @Id
@@ -26,7 +28,7 @@ public class Search extends BaseEntity {
 
     public SearchResponseDto toDto() {
         return SearchResponseDto.builder()
-                .query(searchKeyword)
+                .searchKeyword(this.searchKeyword)
                 .build();
     }
 

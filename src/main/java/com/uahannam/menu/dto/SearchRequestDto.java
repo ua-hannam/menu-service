@@ -12,7 +12,14 @@ public class SearchRequestDto {
 
     public Search toEntity() {
         return Search.builder()
+                .searchKeyword(this.searchKeyword)
+                .build();
+    }
+
+    public Search toEntity(String searchKeyword) {
+        return Search.builder()
                 .searchKeyword(searchKeyword)
+                .memberId(1L)
                 .build();
     }
 }
